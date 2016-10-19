@@ -1,14 +1,7 @@
-import {
-	ADD_TODO,
-	DELETE_TODO,
-	EDIT_TODO,
-	COMPLETE_TODO,
-	COMPLETE_ALL,
-	CLEAR_COMPLETED
-} from '../constants/ActionTypes';
+import { ADD_TODO, DELETE_TODO, EDIT_TODO } from '../constants/ActionTypes';
+import { COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED } from '../constants/ActionTypes';
 
 const { max } = Math;
-
 const nextID = (arr = []) => arr.reduce((mId, { id }) => max(id, mId), -1) + 1;
 
 const add = (text = '', completed = false) => (todos = []) =>
