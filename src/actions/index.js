@@ -10,14 +10,6 @@ import {
 const TODO_REDUCERS = new Set([ADD_TODO, DELETE_TODO, EDIT_TODO, COMPLETE_TODO,
 	COMPLETE_ALL, CLEAR_COMPLETED
 ]);
-
-export const addTodo = text => ({ type: ADD_TODO, text })
-export const deleteTodo = id => ({ type: DELETE_TODO, id })
-export const editTodo = (id, text) => ({ type: EDIT_TODO, id, text })
-export const completeTodo = id => ({ type: COMPLETE_TODO, id })
-export const completeAll = () => ({ type: COMPLETE_ALL })
-export const clearCompleted = () => ({ type: CLEAR_COMPLETED })
-
 const { max } = Math;
 
 const nextID = (arr = []) => arr.reduce((mId, { id }) => max(id, mId), -1) + 1
@@ -38,3 +30,19 @@ const complete_All = (todos = []) => todos.map(t => ({...t, completed: true }))
 
 const clear_completed = (todos = []) =>
 	todos.filter(({ completed }) => !completed)
+export const addTodo = text => ({ type: ADD_TODO, text })
+export const deleteTodo = id => ({ type: DELETE_TODO, id })
+export const editTodo = (id, text) => ({ type: EDIT_TODO, id, text })
+export const completeTodo = id => ({ type: COMPLETE_TODO, id })
+export const completeAll = () => ({ type: COMPLETE_ALL })
+export const clearCompleted = () => ({ type: CLEAR_COMPLETED })
+
+const addTodoC = text => ({ type: ADD_TODO, curry: add(text) })
+const deleteTodoC = id => ({ type: DELETE_TODO, curry: rmTodo(id) })
+const editTodoC = (id, text) => ({ type: EDIT_TODO, curry: edit({id, text })})
+const completeTodoC = id => ({ type: COMPLETE_TODO, id })
+const completeAllC = () => ({ type: COMPLETE_ALL })
+const clearCompletedC = () => ({ type: CLEAR_COMPLETED })
+
+// 
+//
