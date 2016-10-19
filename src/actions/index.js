@@ -3,7 +3,6 @@ import { COMPLETE_TODO, COMPLETE_ALL, CLEAR_COMPLETED } from '../constants/Actio
 
 const { max } = Math;
 const nextID = (arr = []) => arr.reduce((mId, { id }) => max(id, mId), -1) + 1;
-
 const add = (text = '', completed = false) => (todos = []) =>
 	[{ text, completed, id: nextID(todos) }].concat(todos);
 
