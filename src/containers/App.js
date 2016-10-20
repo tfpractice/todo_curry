@@ -5,10 +5,10 @@ import Header from '../components/Header';
 import MainSection from '../components/MainSection';
 import * as TodoActions from '../actions';
 
-const App = ({ todos, actions }) => (
+const App = ({ todos, visFilter, actions }) => (
 	<div>
     <Header addTodo={actions.addTodo} />
-    <MainSection todos={todos} actions={actions} />
+    <MainSection todos={todos} actions={actions} visFilter={visFilter} />
   </div>
 );
 
@@ -17,12 +17,10 @@ App.propTypes = {
 	actions: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ todos }) => ({ todos, });
+const mapStateToProps = ({ todos, visFilter }) => ({ todos, visFilter });
 
-const mapDispatchToProps = dispatch => ({
-	actions: bindActionCreators(
-		TodoActions, dispatch),
-});
+const mapDispatchToProps = dispatch => ({ actions: bindActionCreators(
+		TodoActions, dispatch), });
 
 export default connect(
 	mapStateToProps,

@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import TodoTextInput from './TodoTextInput';
 
 const Header = ({ addTodo }) => (
-	<header className="header">
+    <header className="header">
         <h1>todos</h1>
         <TodoTextInput newTodo
                       onSave={(text)=> text.length !== 0 && addTodo(text)}
