@@ -15,38 +15,43 @@ const activeCount = (todos) => todos.filter(({ completed }) => !completed).lengt
 const allDone = (todos) => todos.length === completedCount(todos);
 const filteredTodos = (f) => (todos) => todos.filter(TODO_FILTERS[f]);
 
-const renderToggleAll = (todos, { completeAll }) => todos.length > 0 && (
+const renderToggleAll = ({ completeAll }) => (todos) => todos.length > 0 && (
 	<input className = "toggle-all"
 		type = "checkbox"
 		checked = { allDone(todos) }
 		onChange = { completeAll }/>
 );
-const renderFooter = ({ todos, actions, visFilter }) => todos.length && (
+const renderFooter = ({ actions, visFilter }) => (todos) => todos.length && (
 
 	<Footer completedCount={completedCount(todos)}
            activeCount={activeCount(todos)}
            filter={visFilter}
            onClearCompleted={actions.clearCompleted}
-           onShow={actions.setVisibilityFilter} />
+           onShow={actions.setVisFilter} />
 );
-// const { todos } = this.props;
-// const { filter } = this.state;
-// const activeCount = todos.length - completedCount;
 
-
-
-// const MS = ({ todos, actions }) => ;
-// (
-//  <section className="main">
-//         {renderToggleAll(completedCount(todos))}
-//         <ul className="todo-list">
-//           {filteredTodos.map(todo =>
-//             <TodoItem key={todo.id} todo={todo} {...actions} />
-//           )}
-//         </ul>
-//         {this.renderFooter(completedCount)}
-//       </section>
-// );
+const MS = ({
+		todos,
+		actions,
+		visFilter,
+		completedCount,
+		activeCount,
+		allDone,
+		filteredTodos,
+		renderToggleAll,
+		renderFooter,
+	}) =>
+	(
+		<section className="main">
+        {renderToggleAll(todos)}
+        <ul className="todo-list">
+          {filteredTodos.map(todo =>
+            <TodoItem key={todo.id} todo={todo} {...actions} />
+          )}
+        </ul>
+        {renderFooter(todos)}
+      </section>
+	);
 // export default class MainSection extends Component {
 
 // jscs:disable validateIndentation
@@ -107,12 +112,12 @@ class MainSection extends Component {
 
 		return (
 			<section className="main">
-        {this.renderToggleAll(completedCount)}
+        {this.props.renderToggleAll(todos)}
         <ul className="todo-list">
           {filteredTodos.map(todo =>
              <TodoItem key={todo.id} todo={todo} {...actions} />)}
         </ul>
-        {this.renderFooter(completedCount)}
+        {this.props.renderFooter(todos)}
       </section>
 		);
 	}
@@ -126,8 +131,12 @@ const mapStateToProps = ({ actions, todos, visFilter }) => ({
 	// renderToggleAll: renderToggleAll(todos, actions),
 });
 
-const mapDispatchToProps = (dispatch, { todos, actions }) => {
-	return ({ renderToggleAll: renderToggleAll(todos, actions) });
+const mapDispatchToProps = (dispatch, { todos, actions, visFilter }) => {
+	return ({
+		renderToggleAll: renderToggleAll(actions),
+		renderFooter: renderFooter({ actions, visFilter }),
+	});
 };
 
+export const MAIN_REDUX = connect(mapStateToProps, mapDispatchToProps)(MS);
 export default connect(mapStateToProps, mapDispatchToProps)(MainSection);
